@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIT Ride - Scooter & Bike Rental for BIT Mesra Students</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1e3a8a;
+            --secondary-blue: #3b82f6;
+            --gold: #fbbf24;
+            --dark-gold: #f59e0b;
+            --light-gray: #f3f4f6;
+            --dark-gray: #374151;
+            --white: #ffffff;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+            transition: transform 0.3s ease;
+            padding: 5px;
+        }
+
+        .logo:hover {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .brand-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-blue);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .tagline {
+            font-size: 12px;
+            color: var(--dark-gold);
+            margin-top: -5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, var(--gold), var(--dark-gold));
+            color: var(--white);
+            padding: 10px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--white);
+            padding: 60px 0;
+            margin: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+            opacity: 0.1;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--dark-gray);
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 40px;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--light-gray), white);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--secondary-blue);
+        }
+
+        .stat-label {
+            color: var(--dark-gray);
+            margin-top: 5px;
+        }
+
+        /* Vehicle Grid */
+        .vehicles-section {
+            padding: 40px 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            color: var(--white);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .vehicle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .vehicle-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.6s ease both;
+            position: relative;
+        }
+
+        .vehicle-card:nth-child(1) { animation-delay: 0.1s; }
+        .vehicle-card:nth-child(2) { animation-delay: 0.2s; }
+        .vehicle-card:nth-child(3) { animation-delay: 0.3s; }
+        .vehicle-card:nth-child(4) { animation-delay: 0.4s; }
+        .vehicle-card:nth-child(5) { animation-delay: 0.5s; }
+        .vehicle-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .vehicle-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--success);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 1;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .vehicle-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--light-gray), #e5e7eb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vehicle-image img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .vehicle-card:hover .vehicle-image img {
+            transform: scale(1.05);
+        }
+
+
+        .vehicle-image::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .vehicle-details {
+            padding: 20px;
+        }
+
+        .vehicle-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .vehicle-specs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .pricing-table {
+            background: var(--light-gray);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .price-row:last-child {
+            border-bottom: none;
+        }
+
+        .price-label {
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+
+        .price-value {
+            color: var(--secondary-blue);
+            font-weight: bold;
+        }
+
+        .book-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, var(--secondary-blue), var(--primary-blue));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .book-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Features Section */
+        .features {
+            background: var(--white);
+            padding: 60px 20px;
+            margin: 40px 20px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--light-gray), white);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .feature-card:nth-child(odd) .feature-icon {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .feature-title {
+            font-size: 20px;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .feature-description {
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 40px 20px 20px;
+            margin-top: 60px;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+
+        .footer-section p, .footer-section ul {
+            line-height: 1.8;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .vehicle-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo-section">
+                <div class="logo">
+                     <img src="https://www.bitmesra.ac.in/BIT_Mesra_Ranchi_Logo.png" alt="BIT Mesra Logo">
+                </div>
+                <div>
+                    <div class="brand-name">BIT Ride</div>
+                    <div class="tagline">Your Campus Mobility Partner</div>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#scooters">Scooters</a></li>
+                <li><a href="#bikes">Bikes</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="cta-button">Book Now</button>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Welcome to BIT Ride</h1>
+                <p>Exclusive Scooter & Bike Rental Service for BIT Mesra Students</p>
+                <p style="color: var(--dark-gold); font-size: 16px;">🎓 Special Student Discounts Available</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Happy Students</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Vehicles</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Support</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="scooters" class="vehicles-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>🛵 Popular Scooters</h2>
+                <p style="color: white;">Perfect for navigating the campus and nearby areas</p>
+            </div>
+            <div class="vehicle-grid">
+                <div class="vehicle-card">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="vehicle-image">
+                        <img src="https://imgd.aeplcdn.com/1280x720/n/cw/ec/136361/activa-6g-right-front-three-quarter-2.png?isig=0" alt="Honda Activa 6G">
+                    </div>
+                    <div class="vehicle-details">
+                        <h3 class="vehicle-name">Honda Activa 6G</h3>
+                        <div class="vehicle-specs">
+                            <span class="spec-item">⛽ 45 km/l</span>
+                            <span class="spec-item">👥 2 Seater</span>
+                            <span class="spec-item">⚙ Automatic</span>
+                        </div>
+                        <div class="pricing-table">
+                            <div class="price-row">
+                                <span class="price-label">Hourly</span>
+                                <span class="price-value">₹40/hr</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Half Day (6 hrs)</span>
+                                <span class="price-value">₹200</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Full Day</span>
+                                <span class="price-value">₹350</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Weekly</span>
+                                <span class="price-value">₹2,000</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Monthly</span>
+                                <span class="price-value">₹6,500</span>
+                            </div>
+                        </div>
+                        <button class="book-button">Book Now</button>
+                    </div>
+                </div>
+
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="https://bd.gaadicdn.com/processedimages/tvs/tvs-jupiter/source/tvs-jupiter-std-walnut-brown-right-side-view_11581029494.jpg" alt="TVS Jupiter">
+                    </div>
+                    <div class="vehicle-details">
+                        <h3 class="vehicle-name">TVS Jupiter</h3>
+                        <div class="vehicle-specs">
+                            <span class="spec-item">⛽ 50 km/l</span>
+                            <span class="spec-item">👥 2 Seater</span>
+                            <span class="spec-item">⚙ Automatic</span>
+                        </div>
+                        <div class="pricing-table">
+                            <div class="price-row">
+                                <span class="price-label">Hourly</span>
+                                <span class="price-value">₹35/hr</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Half Day (6 hrs)</span>
+                                <span class="price-value">₹180</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Full Day</span>
+                                <span class="price-value">₹320</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Weekly</span>
+                                <span class="price-value">₹1,800</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Monthly</span>
+                                <span class="price-value">₹6,000</span>
+                            </div>
+                        </div>
+                        <button class="book-button">Book Now</button>
+                    </div>
+                </div>
+
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="https://imgd.aeplcdn.com/1280x720/n/cw/ec/143183/dio-right-front-three-quarter.jpeg?isig=0" alt="Honda Dio">
+                    </div>
+                    <div class="vehicle-details">
+                        <h3 class="vehicle-name">Honda Dio</h3>
+                        <div class="vehicle-specs">
+                            <span class="spec-item">⛽ 48 km/l</span>
+                            <span class="spec-item">👥 2 Seater</span>
+                            <span class="spec-item">🎯 Sporty</span>
+                        </div>
+                        <div class="pricing-table">
+                            <div class="price-row">
+                                <span class="price-label">Hourly</span>
+                                <span class="price-value">₹35/hr</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Half Day (6 hrs)</span>
+                                <span class="price-value">₹180</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Full Day</span>
+                                <span class="price-value">₹320</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Weekly</span>
+                                <span class="price-value">₹1,800</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Monthly</span>
+                                <span class="price-value">₹6,000</span>
+                            </div>
+                        </div>
+                        <button class="book-button">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="bikes" class="vehicles-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>🏍 Premium Bikes</h2>
+                <p style="color: white;">For longer trips and adventures</p>
+            </div>
+            <div class="vehicle-grid">
+                <div class="vehicle-card">
+                    <div class="popular-badge">Student Favorite</div>
+                    <div class="vehicle-image">
+                       <img src="https://media.zigcdn.com/media/content/2023/Feb/pulsar-p150-1_720x540.jpg" alt="Bajaj Pulsar 150">
+                    </div>
+                    <div class="vehicle-details">
+                        <h3 class="vehicle-name">Bajaj Pulsar 150</h3>
+                        <div class="vehicle-specs">
+                            <span class="spec-item">⛽ 45 km/l</span>
+                            <span class="spec-item">🔧 150cc</span>
+                            <span class="spec-item">⚡ Sport</span>
+                        </div>
+                        <div class="pricing-table">
+                            <div class="price-row">
+                                <span class="price-label">Hourly</span>
+                                <span class="price-value">₹60/hr</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Half Day (6 hrs)</span>
+                                <span class="price-value">₹300</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Full Day</span>
+                                <span class="price-value">₹500</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Weekly</span>
+                                <span class="price-value">₹3,000</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Monthly</span>
+                                <span class="price-value">₹10,000</span>
+                            </div>
+                        </div>
+                        <button class="book-button">Book Now</button>
+                    </div>
+                </div>
+
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="https://imgd.aeplcdn.com/1280x720/n/cw/ec/1/versions/royalenfield-classic-350-halcyon-single-channel-abs--20230202163539.png" alt="Royal Enfield Classic 350">
+                    </div>
+                    <div class="vehicle-details">
+                        <h3 class="vehicle-name">Royal Enfield Classic 350</h3>
+                        <div class="vehicle-specs">
+                            <span class="spec-item">⛽ 35 km/l</span>
+                            <span class="spec-item">🔧 350cc</span>
+                            <span class="spec-item">🎯 Cruiser</span>
+                        </div>
+                        <div class="pricing-table">
+                            <div class="price-row">
+                                <span class="price-label">Hourly</span>
+                                <span class="price-value">₹100/hr</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Half Day (6 hrs)</span>
+                                <span class="price-value">₹500</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Full Day</span>
+                                <span class="price-value">₹800</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Weekly</span>
+                                <span class="price-value">₹4,500</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Monthly</span>
+                                <span class="price-value">₹15,000</span>
+                            </div>
+                        </div>
+                        <button class="book-button">Book Now</button>
+                    </div>
+                </div>
+
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="https://imgd.aeplcdn.com/1280x720/n/cw/ec/144985/200-duke-right-front-three-quarter.jpeg?isig=0" alt="KTM Duke 200">
+                    </div>
+                    <div class="vehicle-details">
+                        <h3 class="vehicle-name">KTM Duke 200</h3>
+                        <div class="vehicle-specs">
+                            <span class="spec-item">⛽ 35 km/l</span>
+                            <span class="spec-item">🔧 200cc</span>
+                            <span class="spec-item">⚡ Sport</span>
+                        </div>
+                        <div class="pricing-table">
+                            <div class="price-row">
+                                <span class="price-label">Hourly</span>
+                                <span class="price-value">₹80/hr</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Half Day (6 hrs)</span>
+                                <span class="price-value">₹400</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Full Day</span>
+                                <span class="price-value">₹650</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Weekly</span>
+                                <span class="price-value">₹3,800</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Monthly</span>
+                                <span class="price-value">₹12,500</span>
+                            </div>
+                        </div>
+                        <button class="book-button">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 style="color: var(--primary-blue);">Why Choose BIT Ride?</h2>
+                <p>Exclusive benefits for BIT Mesra students</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎓</div>
+                    <h3 class="feature-title">Student Discounts</h3>
+                    <p class="feature-description">Special pocket-friendly rates, because we know student life!</p>
+                </div>
+                 <div class="feature-card">
+                    <div class="feature-icon">📍</div>
+                    <h3 class="feature-title">Campus Pickup</h3>
+                    <p class="feature-description">Easy pickup and drop-off points right inside the BIT Mesra campus.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⛑</div>
+                    <h3 class="feature-title">Safety First</h3>
+                    <p class="feature-description">All vehicles are regularly serviced and sanitized. Helmets provided.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Simple Booking</h3>
+                    <p class="feature-description">Quick and easy booking process through our upcoming mobile app.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About BIT Ride</h3>
+                    <p>BIT Ride is a service by students, for students. We aim to provide affordable and convenient mobility solutions for everyone at BIT Mesra.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#scooters">Scooters</a></li>
+                        <li><a href="#bikes">Bikes</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>📍 BIT Mesra, Ranchi, Jharkhand</p>
+                    <p>📧 support@bitride.com</p>
+                    <p>📞 +91 12345 67890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 BIT Ride. All Rights Reserved. Made with ❤ for BITians.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
